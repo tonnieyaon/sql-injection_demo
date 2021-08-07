@@ -14,6 +14,9 @@ var mysql = require('mysql'),
     url = require('url'),
     querystring = require('querystring');
 
+// Start a web server on port 8888. Requests go to function handleRequest
+
+http.createServer(handleRequest).listen(8888);
 
 // Page HTML as one big string, with placeholder "DBCONTENT" for data from the DB
 
@@ -59,7 +62,7 @@ function handleRequest(request, response){
             // The content to be added is in POST parameter "content"
             addContentToDatabase(postParameters.content, function(){
                 // Redirect back to homepage when the database has finished adding the new content to the database
-                response.writehead(302, {'Location':'/'});
+                response.writeHead(302, {'Location':'/'});
                 response.end();
             });
         });
@@ -140,8 +143,3 @@ function addContentToDatabase(content, callback){
         callback();
     });
 }
-
-
-// Start a web server on port 8888. Requests go to function handleRequest
-
-http.createServer(handleRequest).listen(8888);
